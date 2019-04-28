@@ -10,7 +10,7 @@ Synchronize your `.env` and `.env.example` files.
 
 ## TODO
 
-- Allow use to set the files they want to sync
+- Allow users to set the files they want to sync
 - Allow disabling sync in a given folder (Still need to consider if it's worth it)
 - ...And other requested features
 
