@@ -22,8 +22,6 @@ function watchConfigChange (
             const targetFile = readfile(`${getFilePath(file.path)}${childConfig}`);
             const changedFile = readfile(file.path);
 
-            vscode.window.showInformationMessage( JSON.stringify(prepareNewConfig(targetFile, changedFile)) );
-
             if (!configIsSame(targetFile, changedFile)) {
                 writefile( 
                     `${getFilePath(file.path)}${childConfig}`, 

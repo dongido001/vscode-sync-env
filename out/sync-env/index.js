@@ -9,7 +9,6 @@ function watchConfigChange(parentConfig = '.env', childConfig = '.env.example') 
         if (parentConfig && childConfig) {
             const targetFile = helpers_1.readfile(`${helpers_1.getFilePath(file.path)}${childConfig}`);
             const changedFile = helpers_1.readfile(file.path);
-            vscode.window.showInformationMessage(JSON.stringify(helpers_1.prepareNewConfig(targetFile, changedFile)));
             if (!helpers_1.configIsSame(targetFile, changedFile)) {
                 helpers_1.writefile(`${helpers_1.getFilePath(file.path)}${childConfig}`, helpers_1.prepareNewConfig(targetFile, changedFile));
             }
