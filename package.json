@@ -3,7 +3,7 @@
 	"publisher": "dongido",
 	"displayName": "sync-env",
 	"description": "Sync env files",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"repository": "https://github.com/dongido001/vscode-sync-env",
 	"icon": "images/logo.png",
 	"engines": {
