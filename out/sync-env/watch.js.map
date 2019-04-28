@@ -1,0 +1,1 @@
+{"version":3,"file":"watch.js","sourceRoot":"","sources":["../../src/sync-env/watch.ts"],"names":[],"mappings":";;AACA,yBAA6B;AAE7B,IAAI,WAAW,GAA6B,EAAE,CAAC;AAE/C,MAAM,0BAA0B,GAAG,UAAW,CAAC,MAAM,EAAE,cAAc,CAAC,CAAC;AAEvE,0BAA0B,CAAC,OAAO,CAAC,UAAU,CAAC,EAAE;IAC5C,WAAW,CAAC,IAAI,CAAC,UAAU,CAAC,CAAC;AACjC,CAAC,CAAC,CAAC"}
