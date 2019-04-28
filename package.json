@@ -4,6 +4,7 @@
 	"displayName": "sync-env",
 	"description": "Sync env files",
 	"version": "1.0.0",
+	"repository": "https://github.com/dongido001/vscode-sync-env",
 	"engines": {
 		"vscode": "^1.33.0"
 	},
