@@ -20,8 +20,6 @@ Synchronize your `.env` and `.env.example` files.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
-
 ### 1.0.0
 
 Initial release of `syn-env`
