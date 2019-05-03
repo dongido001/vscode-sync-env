@@ -1,6 +1,6 @@
 # sync-env
 
-This is the README for ["sync-env"](https://marketplace.visualstudio.com/items?itemName=dongido.sync-env) which helps you keep your `.env` file in sync with your `env.example` file. Once you have installed the `sync-env`, it will begin synchronizing any `.env` and `.env.example` files found in your project root folder. it also works with sub folders.
+This is the README for ["sync-env"](https://marketplace.visualstudio.com/items?itemName=dongido.sync-env) which helps you keep your `.env` file in sync with your `env.example` file. Once you have installed the `sync-env`, it will begin synchronizing any `.env` and `.env.example` files found in your project root folder. It also works with sub folders.
 
 ## Install
 
