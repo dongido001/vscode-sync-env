@@ -7,3 +7,17 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [Unreleased]
 
 - Initial release
+
+## Release Notes
+
+### 1.0.0
+
+Initial release of `syn-env`
+
+### 1.0.2
+
+### Changed
+- Fix typo
+
+### Added
+- Disable watch when extension is disabled

@@ -17,9 +17,3 @@ Synchronize your `.env` and `.env.example` files.
 - Allow users to set the files they want to sync
 - Allow disabling sync in a given folder (Still need to consider if it's worth it)
 - ...And other requested features
-
-## Release Notes
-
-### 1.0.0
-
-Initial release of `syn-env`
