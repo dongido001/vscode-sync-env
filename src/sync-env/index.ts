@@ -1,43 +1,30 @@
 import * as vscode from 'vscode';
 import {
+    configMapper,
+    getFileName,
     readfile, 
     getFilePath, 
     prepareNewConfig, 
-    configIsSame, 
-    writefile
+    isConfigSame, 
+    writefile,
 } from './helpers';
+import {
+    createFileSystemWatcher,
+    disposeFileSystemWatcher,
+    watchFileChange
+} from './watchers'
 
-let disposables: Array<vscode.Disposable> = [];
+export {
+    getFileName,
+    configMapper,
+    readfile, 
+    getFilePath, 
+    prepareNewConfig, 
+    isConfigSame, 
+    writefile,
+    createFileSystemWatcher,
+    disposeFileSystemWatcher,
+    watchFileChange
+};
 
-function watchConfigChange (
-        parentConfig: string = '.env', 
-        childConfig: string = '.env.example'
-    ): Array<vscode.Disposable> {
-
-    let fileWatcher = vscode.workspace.createFileSystemWatcher(`**/${parentConfig}`);
-
-    const watchFileChange = fileWatcher.onDidChange( file => {
-        if (parentConfig && childConfig) {
-            
-            const targetFile = readfile(`${getFilePath(file.path)}${childConfig}`);
-            const changedFile = readfile(file.path);
-
-            if (!configIsSame(targetFile, changedFile)) {
-                writefile( 
-                    `${getFilePath(file.path)}${childConfig}`, 
-                    prepareNewConfig(targetFile, changedFile)
-                );
-            } 
-        }    
-    });
-
-    return [watchFileChange];
-}
-
-const watchFileChangeDisposables = watchConfigChange('.env', '.env.example');
-
-watchFileChangeDisposables.forEach(disposable => {
-    disposables.push(disposable);
-});
-
-export default disposables;
+export default configMapper;

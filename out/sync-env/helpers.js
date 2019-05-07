@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
+exports.configMapper = {
+    '.env': '.env.example'
+};
 function getFileName(path) {
     return path.replace(/\/.*\//, '');
 }
@@ -57,8 +60,8 @@ function prepareNewConfig(targetConfig, changedConfig) {
     return result.join('\n');
 }
 exports.prepareNewConfig = prepareNewConfig;
-function configIsSame(targetConfig, changedConfig) {
+function isConfigSame(targetConfig, changedConfig) {
     return (targetConfig.replace(/=.*/g, '') === changedConfig.replace(/=.*/g, ''));
 }
-exports.configIsSame = configIsSame;
+exports.isConfigSame = isConfigSame;
 //# sourceMappingURL=helpers.js.map

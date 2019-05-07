@@ -1,13 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = require("./sync-env/index");
-const fileWatcherDisposables = [...index_1.default];
+const sync_env_1 = require("./sync-env");
+const watchers = [];
 function activate(context) {
-    fileWatcherDisposables.forEach(disposable => context.subscriptions.push(disposable));
+    const fileWatcher = sync_env_1.createFileSystemWatcher(`**/.env*`);
+    watchers.push(fileWatcher.onDidChange(sync_env_1.watchFileChange));
+    watchers.forEach(disposable => context.subscriptions.push(disposable));
 }
 exports.activate = activate;
 function deactivate() {
-    fileWatcherDisposables.forEach(disposable => disposable.dispose());
+    watchers.forEach(disposable => disposable.dispose());
 }
 exports.deactivate = deactivate;
 //# sourceMappingURL=extension.js.map

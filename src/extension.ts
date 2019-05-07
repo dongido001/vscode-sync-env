@@ -1,12 +1,19 @@
 import * as vscode from 'vscode';
-import fileWatcher from './sync-env/index';
+import {
+	watchFileChange,
+	createFileSystemWatcher, 
+} from './sync-env';
 
-const fileWatcherDisposables = [...fileWatcher];
+const watchers : Array<vscode.Disposable> = [];
 
 export function activate(context: vscode.ExtensionContext) {
-	fileWatcherDisposables.forEach(disposable => context.subscriptions.push(disposable));
+	const fileWatcher = createFileSystemWatcher(`**/.env*`);
+
+	watchers.push(fileWatcher.onDidChange(watchFileChange));
+
+	watchers.forEach(disposable => context.subscriptions.push(disposable));
 }
 
 export function deactivate() {
-	fileWatcherDisposables.forEach(disposable => disposable.dispose());
+	watchers.forEach(disposable => disposable.dispose());
 }

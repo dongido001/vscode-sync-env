@@ -1,4 +1,9 @@
 import * as fs from 'fs';
+import * as vscode from 'vscode';
+
+export const configMapper: {[key: string]: string} = {
+   '.env': '.env.example'
+};
 
 export function getFileName(path: String): string {
     return path.replace(/\/.*\//, '');
@@ -61,7 +66,6 @@ export function prepareNewConfig (targetConfig: string, changedConfig: string): 
     return result.join('\n');
 }
 
-export function configIsSame (targetConfig: string, changedConfig: string): Boolean {
+export function isConfigSame (targetConfig: string, changedConfig: string): Boolean {
     return (targetConfig.replace(/=.*/g, '') === changedConfig.replace(/=.*/g, ''));
 }
-

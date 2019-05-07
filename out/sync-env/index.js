@@ -1,24 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const vscode = require("vscode");
 const helpers_1 = require("./helpers");
-let disposables = [];
-function watchConfigChange(parentConfig = '.env', childConfig = '.env.example') {
-    let fileWatcher = vscode.workspace.createFileSystemWatcher(`**/${parentConfig}`);
-    const watchFileChange = fileWatcher.onDidChange(file => {
-        if (parentConfig && childConfig) {
-            const targetFile = helpers_1.readfile(`${helpers_1.getFilePath(file.path)}${childConfig}`);
-            const changedFile = helpers_1.readfile(file.path);
-            if (!helpers_1.configIsSame(targetFile, changedFile)) {
-                helpers_1.writefile(`${helpers_1.getFilePath(file.path)}${childConfig}`, helpers_1.prepareNewConfig(targetFile, changedFile));
-            }
-        }
-    });
-    return [watchFileChange];
-}
-const watchFileChangeDisposables = watchConfigChange('.env', '.env.example');
-watchFileChangeDisposables.forEach(disposable => {
-    disposables.push(disposable);
-});
-exports.default = disposables;
+exports.configMapper = helpers_1.configMapper;
+exports.getFileName = helpers_1.getFileName;
+exports.readfile = helpers_1.readfile;
+exports.getFilePath = helpers_1.getFilePath;
+exports.prepareNewConfig = helpers_1.prepareNewConfig;
+exports.isConfigSame = helpers_1.isConfigSame;
+exports.writefile = helpers_1.writefile;
+const watchers_1 = require("./watchers");
+exports.createFileSystemWatcher = watchers_1.createFileSystemWatcher;
+exports.disposeFileSystemWatcher = watchers_1.disposeFileSystemWatcher;
+exports.watchFileChange = watchers_1.watchFileChange;
+exports.default = helpers_1.configMapper;
 //# sourceMappingURL=index.js.map
