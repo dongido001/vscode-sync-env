@@ -42,7 +42,7 @@ export function watchFileCreate(file: vscode.Uri): void {
         vscode.window.showInformationMessage(`
           You just created an env file which you are 
           watching for changes. Do you want to copy 
-          then content of the child(${configMapper[fileName]}) do it?`,  
+          the content of the child(${configMapper[fileName]}) do it?`,  
           ...['No', 'Yes']
         )
         .then(response => {
@@ -52,7 +52,6 @@ export function watchFileCreate(file: vscode.Uri): void {
         });
     }
 }
-
 
 export function watchFile(file: String): vscode.Disposable {
     const fileWatcher = createFileSystemWatcher(`**/${file}`);

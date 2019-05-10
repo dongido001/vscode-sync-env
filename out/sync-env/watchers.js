@@ -25,7 +25,7 @@ function watchFileCreate(file) {
         vscode.window.showInformationMessage(`
           You just created an env file which you are 
           watching for changes. Do you want to copy 
-          then content of the child(${_1.configMapper[fileName]}) do it?`, ...['No', 'Yes'])
+          the content of the child(${_1.configMapper[fileName]}) do it?`, ...['No', 'Yes'])
             .then(response => {
             if (response === 'Yes') {
                 _1.writefile(file.path, targetFile);
