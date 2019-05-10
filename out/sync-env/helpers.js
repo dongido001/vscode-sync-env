@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
 exports.configMapper = {
-    '.env': '.env.example'
+    '.env': '.env.example',
+    '.env.example': '.env'
 };
 function getFileName(path) {
     return path.replace(/\/.*\//, '');

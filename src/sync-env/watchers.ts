@@ -14,10 +14,6 @@ export function createFileSystemWatcher(blob: string): vscode.FileSystemWatcher 
     return vscode.workspace.createFileSystemWatcher(blob);
 }
 
-export function disposeFileSystemWatcher(fileSystemWatcher: vscode.FileSystemWatcher): void {
-    fileSystemWatcher.dispose();
-}
-
 export function watchFileChange(file: vscode.Uri): void {
     
     const fileName = getFileName(file.path);
@@ -34,4 +30,35 @@ export function watchFileChange(file: vscode.Uri): void {
             );
         } 
     }  
+}
+
+export function watchFileCreate(file: vscode.Uri): void {
+    
+    const fileName = getFileName(file.path);
+
+    if ( configMapper[fileName] && fs.existsSync(getFilePath(file.path)+configMapper[fileName]) ) {
+        const targetFile = readfile(`${getFilePath(file.path)}${configMapper[fileName]}`);
+
+        vscode.window.showInformationMessage(`
+          You just created an env file which you are 
+          watching for changes. Do you want to copy 
+          then content of the child(${configMapper[fileName]}) do it?`,  
+          ...['No', 'Yes']
+        )
+        .then(response => {
+            if (response === 'Yes') {
+                writefile(file.path, targetFile);
+            }
+        });
+    }
+}
+
+
+export function watchFile(file: String): vscode.Disposable {
+    const fileWatcher = createFileSystemWatcher(`**/${file}`);
+
+    fileWatcher.onDidChange(watchFileChange);
+    fileWatcher.onDidCreate(watchFileCreate);
+
+    return fileWatcher;
 }
