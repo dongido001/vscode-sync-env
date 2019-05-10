@@ -42,7 +42,7 @@ export function watchFileCreate(file: vscode.Uri): void {
         vscode.window.showInformationMessage(`
           You just created an env file which you are 
           watching for changes. Do you want to copy 
-          the content of the child(${configMapper[fileName]}) do it?`,  
+          the content of the child(${configMapper[fileName]}) to it?`,  
           ...['No', 'Yes']
         )
         .then(response => {
