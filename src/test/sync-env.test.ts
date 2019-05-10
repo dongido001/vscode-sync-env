@@ -5,8 +5,8 @@ import {
 
 const filePath = [
   {path: "/users/fish/.env", expect: '.env'},
-  {path: "/users/fish/.env.example", expect: '.env'},
-  {path: "/users/fish/.env.local", expect: '.env'},
+  {path: "/users/fish/.env.example", expect: '.env.example'},
+  {path: "/users/fish/.env.local", expect: '.env.local'},
   {path: "users/fish/.env", expect: '.env'}
 ];
 
