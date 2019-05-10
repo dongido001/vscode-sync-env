@@ -12,6 +12,21 @@ Synchronize your `.env` and `.env.example` files.
 
 ![Sync Env Demo](./images/sync-env.gif)
 
+
+# Changelog
+
+Notable changes:
+
+## [1.0.3] - 2019-04-10
+
+### Added
+- Added basics for writing tests
+- Provided provision for customising .env files
+### Changed
+- Refactored code
+### Removed
+
+
 ## TODO
 
 - Allow users to set the files they want to sync

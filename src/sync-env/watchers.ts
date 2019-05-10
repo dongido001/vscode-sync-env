@@ -33,7 +33,7 @@ export function watchFileChange(file: vscode.Uri): void {
 }
 
 export function watchFileCreate(file: vscode.Uri): void {
-    
+
     const fileName = getFileName(file.path);
 
     if ( configMapper[fileName] && fs.existsSync(getFilePath(file.path)+configMapper[fileName]) ) {
