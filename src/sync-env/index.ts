@@ -10,9 +10,9 @@ import {
 } from './helpers';
 import {
     createFileSystemWatcher,
-    disposeFileSystemWatcher,
-    watchFileChange
-} from './watchers'
+    watchFileChange,
+    watchFile
+} from './watchers';
 
 export {
     getFileName,
@@ -23,8 +23,8 @@ export {
     isConfigSame, 
     writefile,
     createFileSystemWatcher,
-    disposeFileSystemWatcher,
-    watchFileChange
+    watchFileChange,
+    watchFile
 };
 
 export default configMapper;

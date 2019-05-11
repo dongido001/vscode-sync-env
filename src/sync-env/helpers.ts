@@ -2,7 +2,8 @@ import * as fs from 'fs';
 import * as vscode from 'vscode';
 
 export const configMapper: {[key: string]: string} = {
-   '.env': '.env.example'
+   '.env': '.env.example',
+//    '.env.example': '.env'
 };
 
 export function getFileName(path: String): string {
