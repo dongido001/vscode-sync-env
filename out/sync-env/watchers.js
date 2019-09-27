@@ -12,9 +12,13 @@ function watchFileChange(file) {
     if (_1.configMapper[fileName] && fs.existsSync(_1.getFilePath(file.path) + fileName)) {
         const targetFile = _1.readfile(`${_1.getFilePath(file.path)}${_1.configMapper[fileName]}`);
         const changedFile = _1.readfile(file.path);
-        if (!_1.isConfigSame(targetFile, changedFile)) {
-            _1.writefile(`${_1.getFilePath(file.path)}${_1.configMapper[fileName]}`, _1.prepareNewConfig(targetFile, changedFile));
-        }
+        _1.writefile(`${_1.getFilePath(file.path)}${_1.configMapper[fileName]}`, _1.prepareNewConfig(targetFile, changedFile));
+        // if (!isConfigSame(targetFile, changedFile)) {
+        //     writefile( 
+        //         `${getFilePath(file.path)}${configMapper[fileName]}`, 
+        //         prepareNewConfig(targetFile, changedFile)
+        //     );
+        // } 
     }
 }
 exports.watchFileChange = watchFileChange;

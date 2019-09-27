@@ -23,12 +23,17 @@ export function watchFileChange(file: vscode.Uri): void {
         const targetFile = readfile(`${getFilePath(file.path)}${configMapper[fileName]}`);
         const changedFile = readfile(file.path);
 
-        if (!isConfigSame(targetFile, changedFile)) {
-            writefile( 
-                `${getFilePath(file.path)}${configMapper[fileName]}`, 
-                prepareNewConfig(targetFile, changedFile)
-            );
-        } 
+        writefile( 
+            `${getFilePath(file.path)}${configMapper[fileName]}`, 
+            prepareNewConfig(targetFile, changedFile)
+        );
+
+        // if (!isConfigSame(targetFile, changedFile)) {
+        //     writefile( 
+        //         `${getFilePath(file.path)}${configMapper[fileName]}`, 
+        //         prepareNewConfig(targetFile, changedFile)
+        //     );
+        // } 
     }  
 }
 
