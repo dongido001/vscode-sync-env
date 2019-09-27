@@ -16,9 +16,21 @@
 	"activationEvents": [
 		"workspaceContains:**/*"
 	],
+	"contributes": {
+		"commands": [
+		  {
+			"command": "sync-env.activateWatchers",
+			"title": "Activate watchers"
+		  },
+		  {
+			"command": "sync-env.deactivateWatchers",
+			"title": "Deactivate watchers"
+		  }
+		]
+	},
 	"main": "./out/extension.js",
 	"scripts": {
-		"vscode:prepublish": "yarn run compile",
+		"vscode:prepu`blish": "yarn run compile",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
 		"postinstall": "node ./node_modules/vscode/bin/install",

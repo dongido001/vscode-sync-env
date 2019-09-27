@@ -1,19 +1,19 @@
 import * as vscode from 'vscode';
 import {
-	configMapper,
-	watchFile
-} from './sync-env';
+	activateWatchers, 
+	deactivateWatchers
+} from './sync-env/commands/index';
 
 const watchers : Array<vscode.Disposable> = [];
 
 export function activate(context: vscode.ExtensionContext) {
-	for (let config in configMapper) {
-	  watchers.push(watchFile(config));
-	}
-	
-	watchers.forEach(disposable => context.subscriptions.push(disposable));
+	vscode.window.showInformationMessage(JSON.stringify(activateWatchers));
+	context.subscriptions.push(activateWatchers(watchers));
+	context.subscriptions.push(deactivateWatchers(watchers));
+
+	vscode.commands.executeCommand('sync-env.activateWatchers');
 }
 
 export function deactivate() {
-	watchers.forEach(disposable => disposable.dispose());
+	vscode.commands.executeCommand('sync-env.deactivateWatchers');
 }

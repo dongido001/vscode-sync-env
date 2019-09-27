@@ -25,14 +25,25 @@ export function readfile (path: string) {
 export function envToObjectWithSpace (env: string): Array<any> {
     const config: Array<any> = [];
 
-    env.split('\n').forEach( line => {
-        const lineArray = line.split('=');
-        config.push({
-            isSpace: !lineArray[0],
-            key: lineArray[0] || 'space',
-            value: lineArray[1] || '',
+    env
+        .split('\n')
+        .forEach( line => {
+            if (line.startsWith('#')) {
+                config.push({
+                    isSpace: false,
+                    isComment: true,
+                    key: '*****comment*****',
+                    value: line,
+                });
+            } else {
+                const lineArray = line.split('=');
+                config.push({
+                    isSpace: !lineArray[0],
+                    key: lineArray[0] || 'space',
+                    value: lineArray[1] || '',
+                });
+            }
         });
-    });
 
     return config;
 }
@@ -40,10 +51,12 @@ export function envToObjectWithSpace (env: string): Array<any> {
 export function envToObject (env: string): Array<any> {
     const config: any = [];
 
-    env.split('\n').forEach( line => {
-        const lineArray = line.split('=');
-        config[lineArray[0] || 'space'] = lineArray[1] || '';
-    });
+    env
+        .split('\n')
+        .forEach( line => {
+            const lineArray = line.split('=');
+            config[lineArray[0] || 'space'] = lineArray[1] || '';
+        });
 
     return config;
 }
@@ -55,7 +68,9 @@ export function prepareNewConfig (targetConfig: string, changedConfig: string): 
     let result: Array<string> = [];
 
     changedConfigObject.forEach( config => {
-        if (config.isSpace) {
+        if (config.isComment) {
+            result.push(config.value);
+        } else if (config.isSpace) {
             result.push('');
         } else if (config.key in targetConfigObject) {
             result.push(`${config.key}=${targetConfigObject[config.key]}`);

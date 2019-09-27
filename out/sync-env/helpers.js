@@ -22,20 +22,34 @@ function readfile(path) {
 exports.readfile = readfile;
 function envToObjectWithSpace(env) {
     const config = [];
-    env.split('\n').forEach(line => {
-        const lineArray = line.split('=');
-        config.push({
-            isSpace: !lineArray[0],
-            key: lineArray[0] || 'space',
-            value: lineArray[1] || '',
-        });
+    env
+        .split('\n')
+        .forEach(line => {
+        if (line.startsWith('#')) {
+            config.push({
+                isSpace: false,
+                isComment: true,
+                key: '*****comment*****',
+                value: line,
+            });
+        }
+        else {
+            const lineArray = line.split('=');
+            config.push({
+                isSpace: !lineArray[0],
+                key: lineArray[0] || 'space',
+                value: lineArray[1] || '',
+            });
+        }
     });
     return config;
 }
 exports.envToObjectWithSpace = envToObjectWithSpace;
 function envToObject(env) {
     const config = [];
-    env.split('\n').forEach(line => {
+    env
+        .split('\n')
+        .forEach(line => {
         const lineArray = line.split('=');
         config[lineArray[0] || 'space'] = lineArray[1] || '';
     });
@@ -47,7 +61,10 @@ function prepareNewConfig(targetConfig, changedConfig) {
     const changedConfigObject = envToObjectWithSpace(changedConfig);
     let result = [];
     changedConfigObject.forEach(config => {
-        if (config.isSpace) {
+        if (config.isComment) {
+            result.push(config.value);
+        }
+        else if (config.isSpace) {
             result.push('');
         }
         else if (config.key in targetConfigObject) {
