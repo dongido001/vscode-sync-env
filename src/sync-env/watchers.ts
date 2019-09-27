@@ -5,7 +5,6 @@ import {
     configMapper, 
     getFilePath, 
     readfile, 
-    isConfigSame, 
     prepareNewConfig, 
     writefile 
 } from './';
