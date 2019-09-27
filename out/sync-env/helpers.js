@@ -67,6 +67,9 @@ function prepareNewConfig(targetConfig, changedConfig) {
         else if (config.isSpace) {
             result.push('');
         }
+        else if (config.value.match(/["']\s*\${.*}\s*["']/)) {
+            result.push(`${config.key}=${config.value}`);
+        }
         else if (config.key in targetConfigObject) {
             result.push(`${config.key}=${targetConfigObject[config.key]}`);
         }
