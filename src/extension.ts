@@ -7,7 +7,6 @@ import {
 const watchers : Array<vscode.Disposable> = [];
 
 export function activate(context: vscode.ExtensionContext) {
-	vscode.window.showInformationMessage(JSON.stringify(activateWatchers));
 	context.subscriptions.push(activateWatchers(watchers));
 	context.subscriptions.push(deactivateWatchers(watchers));
 
