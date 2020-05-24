@@ -79,6 +79,13 @@ Notable changes:
 - Refactored code to allow activating and deactivating the extension
 ### Removed
 
+## [1.0.5] - 2020-05-25
+
+### Added
+- You can now customize/specify your env files
+### Changed
+### Removed
+
 ## BUG AND FEATURE REQUEST
 Please, open an [issue on GitHub](https://github.com/dongido001/vscode-sync-env/issues) if you want to report a bug or you thought of a good feature to have. 
 
@@ -86,6 +93,6 @@ Contribution is always wellcomed!
 
 ## TODO
 
-- Allow users to set the files they want to sync
-- Allow disabling sync in a given folder (Still need to consider if it's worth it)
-- ...And other requested features
+- [x] Allow users to set the files they want to sync.
+
+- [] ...And other requested features
