@@ -21,6 +21,10 @@ function getEnvDestination() {
         // default to `.env`
         envDestination = ".env.example";
     }
+    // remove source envFile from destination envFile
+    // to fix a bug of unbreakable loop...
+    const sourceEnv = getEnvSource();
+    envDestination = envDestination.filter((f) => f !== sourceEnv);
     return envDestination;
 }
 exports.getEnvDestination = getEnvDestination;

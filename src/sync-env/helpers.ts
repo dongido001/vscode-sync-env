@@ -24,6 +24,11 @@ export function getEnvDestination(): string | Array<string> {
         envDestination = ".env.example";
     }
 
+    // remove source envFile from destination envFile
+    // to fix a bug of unbreakable loop...
+    const sourceEnv: string = getEnvSource();
+    envDestination = envDestination.filter((f: string) => f !== sourceEnv);
+
     return envDestination;
 }
 
