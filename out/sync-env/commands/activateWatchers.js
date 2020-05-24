@@ -4,9 +4,8 @@ const vscode = require("vscode");
 const index_1 = require("../index");
 function activateWatchers(watchers = []) {
     return vscode.commands.registerCommand('sync-env.activateWatchers', () => {
-        for (let config in index_1.configMapper) {
-            watchers.push(index_1.watchFile(config));
-        }
+        const sourceFile = index_1.getEnvSource();
+        watchers.push(index_1.watchFile(sourceFile));
         vscode.window.showInformationMessage("Sync-env Activated!");
     });
 }

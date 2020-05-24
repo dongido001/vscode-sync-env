@@ -1,9 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
-exports.configMapper = {
-    '.env': '.env.example',
-};
+const vscode = require("vscode");
+function getEnvSource() {
+    const settings = vscode.workspace.getConfiguration('sync-env');
+    let { envSource } = settings;
+    if (!envSource || !envSource.length) {
+        // empty source file provided or invalid...
+        // default to `.env`
+        envSource = ".env";
+    }
+    return envSource;
+}
+exports.getEnvSource = getEnvSource;
+function getEnvDestination() {
+    const settings = vscode.workspace.getConfiguration('sync-env');
+    let { envDestination } = settings;
+    if (!envDestination || !envDestination.length) {
+        // empty destination file provided or invalid...
+        // default to `.env`
+        envDestination = ".env.example";
+    }
+    return envDestination;
+}
+exports.getEnvDestination = getEnvDestination;
 function getFileName(path) {
     return path.replace(/\/.*\//, '');
 }

@@ -1,12 +1,12 @@
-import * as vscode from 'vscode';
 import {
-    configMapper,
     getFileName,
     readfile, 
     getFilePath, 
     prepareNewConfig, 
     isConfigSame, 
     writefile,
+    getEnvSource,
+    getEnvDestination
 } from './helpers';
 import {
     createFileSystemWatcher,
@@ -16,7 +16,6 @@ import {
 
 export {
     getFileName,
-    configMapper,
     readfile, 
     getFilePath, 
     prepareNewConfig, 
@@ -24,7 +23,9 @@ export {
     writefile,
     createFileSystemWatcher,
     watchFileChange,
-    watchFile
+    watchFile,
+    getEnvSource,
+    getEnvDestination
 };
 
-export default configMapper;
+export default getEnvSource;
