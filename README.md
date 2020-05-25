@@ -2,6 +2,8 @@
 
 This is the README for ["sync-env"](https://marketplace.visualstudio.com/items?itemName=dongido.sync-env) which helps you keep your env files in sync. Once you have installed the `sync-env` extension, it will begin synchronizing any source env file and destination env file/files found in your project root folder. It also works with sub folders too.
 
+Annnnd if you like it, consider suppporting me at [Pateron](https://www.patreon.com/dongido)
+
 ## Installing
 
 Download and install it from the vs-code market [here](https://marketplace.visualstudio.com/items?itemName=dongido.sync-env)
