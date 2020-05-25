@@ -1,15 +1,14 @@
 import * as vscode from 'vscode';
 import {
-	configMapper,
+	getEnvSource,
 	watchFile
 } from '../index';
 
 export default function activateWatchers (watchers: Array<vscode.Disposable> = []) {
-    
     return vscode.commands.registerCommand('sync-env.activateWatchers', () => {
-        for (let config in configMapper) {
-            watchers.push(watchFile(config));
-        }
+        const sourceFile: string = getEnvSource();
+
+        watchers.push(watchFile(sourceFile));
         vscode.window.showInformationMessage("Sync-env Activated!");
     });
 }

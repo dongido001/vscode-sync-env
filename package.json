@@ -3,7 +3,7 @@
 	"publisher": "dongido",
 	"displayName": "sync-env",
 	"description": "Sync env files",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"repository": "https://github.com/dongido001/vscode-sync-env",
 	"icon": "images/logo.png",
 	"license": "MIT",
@@ -26,7 +26,22 @@
 			"command": "sync-env.deactivateWatchers",
 			"title": "Deactivate watchers"
 		  }
-		]
+		],
+		"configuration": {
+			"title": "SyncEnv Settings",
+			"properties": {
+			  "sync-env.envSource": {
+				"type": "string",
+				"default": ".env",
+				"description": "Specifies which file is the Source file."
+			  },
+			  "sync-env.envDestination": {
+				"type": ["string", "null", "array"],
+				"default": [".env.example"],
+				"description": "Specifies the Destination file/files."
+			  }
+			}
+		}
 	},
 	"main": "./out/extension.js",
 	"scripts": {

@@ -1,10 +1,36 @@
 import * as fs from 'fs';
 import * as vscode from 'vscode';
 
-export const configMapper: {[key: string]: string} = {
-   '.env': '.env.example',
-//    '.env.example': '.env'
-};
+export function getEnvSource(): string {
+    const settings = vscode.workspace.getConfiguration('sync-env');
+    let { envSource } = settings;
+
+    if (!envSource || !envSource.length) {
+        // empty source file provided or invalid...
+        // default to `.env`
+        envSource = ".env";
+    }
+
+    return envSource;
+}
+
+export function getEnvDestination(): string | Array<string> {
+    const settings = vscode.workspace.getConfiguration('sync-env');
+    let { envDestination } = settings;
+
+    if (!envDestination || !envDestination.length) {
+        // empty destination file provided or invalid...
+        // default to `.env`
+        envDestination = ".env.example";
+    }
+
+    // remove source envFile from destination envFile
+    // to fix a bug of unbreakable loop...
+    const sourceEnv: string = getEnvSource();
+    envDestination = envDestination.filter((f: string) => f !== sourceEnv);
+
+    return envDestination;
+}
 
 export function getFileName(path: String): string {
     return path.replace(/\/.*\//, '');
