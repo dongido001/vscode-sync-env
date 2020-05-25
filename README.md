@@ -88,6 +88,14 @@ Notable changes:
 ### Changed
 ### Removed
 
+
+## [1.0.6] - 2020-05-25
+
+### Added
+- Update README.md
+### Changed
+### Removed
+
 ## BUG AND FEATURE REQUEST
 Please, open an [issue on GitHub](https://github.com/dongido001/vscode-sync-env/issues) if you want to report a bug or you thought of a good feature to have. 
 
