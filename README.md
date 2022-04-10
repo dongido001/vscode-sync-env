@@ -12,7 +12,7 @@ Download and install it from the vs-code market [here](https://marketplace.visua
 
 ## Configuring sync files
 
-The extension assumes that your config files are `.env`(source) and `.env.example`(destination) by dfault. Sure, this is not the case most of the time. You can specify which file is your source file and which is the destination file.
+The extension assumes that your config files are `.env`(source) and `.env.example`(destination) by default. Sure, this is not the case most of the time. You can specify which file is your source file and which is the destination file.
 
 To configure:
 
