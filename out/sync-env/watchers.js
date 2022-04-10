@@ -10,35 +10,18 @@ function createFileSystemWatcher(blob) {
 exports.createFileSystemWatcher = createFileSystemWatcher;
 function watchFileChange(file) {
     const destinationEnv = _1.getEnvDestination();
-    let des = [];
-    // We want to turn string to array
-    if (typeof destinationEnv === 'string' || destinationEnv instanceof String) {
-        des = [destinationEnv];
-    }
-    else {
-        des = [...destinationEnv];
-    }
-    des.forEach(destFile => {
+    destinationEnv.forEach(destFile => {
         if (fs.existsSync(_1.getFilePath(file.path) + destFile)) {
             const targetFile = _1.readfile(`${_1.getFilePath(file.path)}${destFile}`);
             const changedFile = _1.readfile(file.path);
             _1.writefile(`${_1.getFilePath(file.path)}${destFile}`, _1.prepareNewConfig(targetFile, changedFile));
         }
     });
-    vscode.window.showInformationMessage(JSON.stringify(des));
 }
 exports.watchFileChange = watchFileChange;
 function watchFileCreate(file) {
     const destinationEnv = _1.getEnvDestination();
-    let des = [];
-    // We want to turn string to array
-    if (typeof destinationEnv === 'string' || destinationEnv instanceof String) {
-        des = [destinationEnv];
-    }
-    else {
-        des = [...destinationEnv];
-    }
-    des.forEach(destFile => {
+    destinationEnv.forEach(destFile => {
         if (fs.existsSync(_1.getFilePath(file.path) + destFile)) {
             const targetFile = _1.readfile(`${_1.getFilePath(file.path)}${destFile}`);
             vscode.window.showInformationMessage(`
@@ -46,9 +29,8 @@ function watchFileCreate(file) {
               watching for changes. Do you want to copy 
               the content of the child(${destFile}) to it?`, ...['No', 'Yes'])
                 .then(response => {
-                if (response === 'Yes') {
+                if (response === 'Yes')
                     _1.writefile(file.path, targetFile);
-                }
             });
         }
     });

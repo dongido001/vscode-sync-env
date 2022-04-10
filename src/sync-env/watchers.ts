@@ -14,16 +14,8 @@ export function createFileSystemWatcher(blob: string): vscode.FileSystemWatcher 
 
 export function watchFileChange(file: vscode.Uri): void {
     const destinationEnv: string | Array<string> = getEnvDestination();
-    let des: Array<string> = [];
 
-    // We want to turn string to array
-    if (typeof destinationEnv === 'string' || destinationEnv instanceof String) {
-        des = [destinationEnv as string];
-    } else {
-        des = [...destinationEnv];
-    }
-
-    des.forEach(destFile => {
+    destinationEnv.forEach(destFile => {
         if (fs.existsSync(getFilePath(file.path) + destFile)) {
             const targetFile = readfile(`${getFilePath(file.path)}${destFile}`);
             const changedFile = readfile(file.path);
@@ -34,22 +26,12 @@ export function watchFileChange(file: vscode.Uri): void {
             );
         }
     });
-
-    vscode.window.showInformationMessage(JSON.stringify(des));
 }
 
 export function watchFileCreate(file: vscode.Uri): void {
-    const destinationEnv: string | Array<string> = getEnvDestination();
-    let des: Array<string> = [];
+    const destinationEnv: Array<string> = getEnvDestination();
 
-    // We want to turn string to array
-    if (typeof destinationEnv === 'string' || destinationEnv instanceof String) {
-        des = [destinationEnv as string];
-    } else {
-        des = [...destinationEnv];
-    }
-
-    des.forEach(destFile => {
+    destinationEnv.forEach(destFile => {
         if (fs.existsSync(getFilePath(file.path) + destFile)) {
             const targetFile = readfile(`${getFilePath(file.path)}${destFile}`);
 
@@ -59,20 +41,16 @@ export function watchFileCreate(file: vscode.Uri): void {
               the content of the child(${destFile}) to it?`,
                 ...['No', 'Yes']
             )
-                .then(response => {
-                    if (response === 'Yes') {
-                        writefile(file.path, targetFile);
-                    }
-                });
+            .then(response => {
+                if (response === 'Yes') writefile(file.path, targetFile);
+            });
         }
     });
 }
 
 export function watchFile(file: String): vscode.Disposable {
     const fileWatcher = createFileSystemWatcher(`**/${file}`);
-
     fileWatcher.onDidChange(watchFileChange);
     fileWatcher.onDidCreate(watchFileCreate);
-
     return fileWatcher;
 }
