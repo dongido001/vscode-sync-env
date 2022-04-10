@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.isConfigSame = exports.prepareNewConfig = exports.envToObject = exports.envToObjectWithSpace = exports.readfile = exports.writefile = exports.getFilePath = exports.getFileName = exports.getEnvDestination = exports.getEnvSource = void 0;
 const fs = require("fs");
 const vscode = require("vscode");
 function getEnvSource() {
@@ -15,17 +16,24 @@ function getEnvSource() {
 exports.getEnvSource = getEnvSource;
 function getEnvDestination() {
     const settings = vscode.workspace.getConfiguration('sync-env');
+    const sourceEnv = getEnvSource();
     let { envDestination } = settings;
+    const destinationComputed = [];
     if (!envDestination || !envDestination.length) {
         // empty destination file provided or invalid...
-        // default to `.env`
+        // let's default to `.env.example`
         envDestination = ".env.example";
+    }
+    if (Array.isArray(envDestination)) {
+        destinationComputed.push(...envDestination);
+    }
+    else {
+        // it's string
+        destinationComputed.push(envDestination);
     }
     // remove source envFile from destination envFile
     // to fix a bug of unbreakable loop...
-    const sourceEnv = getEnvSource();
-    envDestination = envDestination.filter((f) => f !== sourceEnv);
-    return envDestination;
+    return destinationComputed.filter((destinationEnv) => destinationEnv !== sourceEnv);
 }
 exports.getEnvDestination = getEnvDestination;
 function getFileName(path) {

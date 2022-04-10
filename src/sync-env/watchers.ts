@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import * as vscode from 'vscode';
-import { 
-    getFilePath, 
-    readfile, 
-    prepareNewConfig, 
+import {
+    getFilePath,
+    readfile,
+    prepareNewConfig,
     writefile,
     getEnvDestination
 } from './';
@@ -27,13 +27,15 @@ export function watchFileChange(file: vscode.Uri): void {
         if (fs.existsSync(getFilePath(file.path) + destFile)) {
             const targetFile = readfile(`${getFilePath(file.path)}${destFile}`);
             const changedFile = readfile(file.path);
-    
-            writefile( 
-                `${getFilePath(file.path)}${destFile}`, 
+
+            writefile(
+                `${getFilePath(file.path)}${destFile}`,
                 prepareNewConfig(targetFile, changedFile)
             );
-        }  
+        }
     });
+
+    vscode.window.showInformationMessage(JSON.stringify(des));
 }
 
 export function watchFileCreate(file: vscode.Uri): void {
@@ -50,18 +52,18 @@ export function watchFileCreate(file: vscode.Uri): void {
     des.forEach(destFile => {
         if (fs.existsSync(getFilePath(file.path) + destFile)) {
             const targetFile = readfile(`${getFilePath(file.path)}${destFile}`);
-    
+
             vscode.window.showInformationMessage(`
               You just created an env file which you are 
               watching for changes. Do you want to copy 
-              the content of the child(${destFile}) to it?`,  
-              ...['No', 'Yes']
+              the content of the child(${destFile}) to it?`,
+                ...['No', 'Yes']
             )
-            .then(response => {
-                if (response === 'Yes') {
-                    writefile(file.path, targetFile);
-                }
-            });
+                .then(response => {
+                    if (response === 'Yes') {
+                        writefile(file.path, targetFile);
+                    }
+                });
         }
     });
 }

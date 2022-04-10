@@ -14,22 +14,29 @@ export function getEnvSource(): string {
     return envSource;
 }
 
-export function getEnvDestination(): string | Array<string> {
+export function getEnvDestination(): Array<string> {
     const settings = vscode.workspace.getConfiguration('sync-env');
+    const sourceEnv: string = getEnvSource();
     let { envDestination } = settings;
+
+    const destinationComputed: Array<string> = []
 
     if (!envDestination || !envDestination.length) {
         // empty destination file provided or invalid...
-        // default to `.env`
+        // let's default to `.env.example`
         envDestination = ".env.example";
+    }
+
+    if (Array.isArray(envDestination)) {
+        destinationComputed.push(...envDestination)
+    } else {
+        // it's string
+        destinationComputed.push(envDestination)
     }
 
     // remove source envFile from destination envFile
     // to fix a bug of unbreakable loop...
-    const sourceEnv: string = getEnvSource();
-    envDestination = envDestination.filter((f: string) => f !== sourceEnv);
-
-    return envDestination;
+    return destinationComputed.filter((destinationEnv: string) => destinationEnv !== sourceEnv);
 }
 
 export function getFileName(path: String): string {
@@ -40,20 +47,20 @@ export function getFilePath(path: String): string {
     return path.replace(/\..*/, '');
 }
 
-export function writefile (path: string, data: string) {
+export function writefile(path: string, data: string) {
     fs.writeFileSync(path, data, 'utf8');
 }
 
-export function readfile (path: string) {
-    return fs.readFileSync(path,'utf8');
+export function readfile(path: string) {
+    return fs.readFileSync(path, 'utf8');
 }
 
-export function envToObjectWithSpace (env: string): Array<any> {
+export function envToObjectWithSpace(env: string): Array<any> {
     const config: Array<any> = [];
 
     env
         .split('\n')
-        .forEach( line => {
+        .forEach(line => {
             if (line.startsWith('#')) {
                 config.push({
                     isSpace: false,
@@ -74,12 +81,12 @@ export function envToObjectWithSpace (env: string): Array<any> {
     return config;
 }
 
-export function envToObject (env: string): Array<any> {
+export function envToObject(env: string): Array<any> {
     const config: any = [];
 
     env
         .split('\n')
-        .forEach( line => {
+        .forEach(line => {
             const lineArray = line.split('=');
             config[lineArray[0] || 'space'] = lineArray[1] || '';
         });
@@ -87,13 +94,13 @@ export function envToObject (env: string): Array<any> {
     return config;
 }
 
-export function prepareNewConfig (targetConfig: string, changedConfig: string): any {
+export function prepareNewConfig(targetConfig: string, changedConfig: string): any {
     const targetConfigObject: Array<any> = envToObject(targetConfig);
     const changedConfigObject: Array<any> = envToObjectWithSpace(changedConfig);
 
     let result: Array<string> = [];
 
-    changedConfigObject.forEach( config => {
+    changedConfigObject.forEach(config => {
         if (config.isComment) {
             result.push(config.value);
         } else if (config.isSpace) {
@@ -110,6 +117,6 @@ export function prepareNewConfig (targetConfig: string, changedConfig: string): 
     return result.join('\n');
 }
 
-export function isConfigSame (targetConfig: string, changedConfig: string): Boolean {
+export function isConfigSame(targetConfig: string, changedConfig: string): Boolean {
     return (targetConfig.replace(/=.*/g, '') === changedConfig.replace(/=.*/g, ''));
 }

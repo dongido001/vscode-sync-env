@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.watchFile = exports.watchFileCreate = exports.watchFileChange = exports.createFileSystemWatcher = void 0;
 const fs = require("fs");
 const vscode = require("vscode");
 const _1 = require("./");
@@ -24,6 +25,7 @@ function watchFileChange(file) {
             _1.writefile(`${_1.getFilePath(file.path)}${destFile}`, _1.prepareNewConfig(targetFile, changedFile));
         }
     });
+    vscode.window.showInformationMessage(JSON.stringify(des));
 }
 exports.watchFileChange = watchFileChange;
 function watchFileCreate(file) {

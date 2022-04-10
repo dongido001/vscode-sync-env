@@ -5,7 +5,7 @@
 	"description": "Sync env files",
 	"version": "1.0.5",
 	"repository": "https://github.com/dongido001/vscode-sync-env",
-	"icon": "images/logo.png",
+	"icon": "https://github.com/dongido001/vscode-sync-env/blob/master/images/logo.png",
 	"license": "MIT",
 	"engines": {
 		"vscode": "^1.33.0"
