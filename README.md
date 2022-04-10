@@ -12,7 +12,7 @@ Download and install it from the vs-code market [here](https://marketplace.visua
 
 ## Configuring sync files
 
-The extension assumes that your config files are `.env`(source) and `.env.example`(destination) by default. Sure, this is not the case most of the time. You can specify which file is your source file and which is the destination file.
+The extension assumes that your config files are `.env` (source) and `.env.example` (destination) by default. Yeah we know that this is not the case all the time. You can specify which file is your source file and which is the destination file/files.
 
 To configure:
 
@@ -20,24 +20,41 @@ To configure:
 
 ![Configuring sync files - Step 1](./images/Sync-env-step-1.png)
 
+3. Then click on **Settings** option. Then select *Extensions*:
+
+![Configuring sync files - Step 1](./images/sub-settings.png)
+
 2. Then click on **SyncEnv Settings**:
 
 ![Configuring sync files - Step 1](./images/Sync-env-step-2.png)
 
-3. Finally, set your files as you wish:
+4. Finally, set your files as you wish:
 
 ![Configuring sync files - Step 1](./images/Sync-env-step-3.png)
 
-> **Note** that the `Env Destination` can be a string or an array. Example: ".env.local" 
-> OR 
-> `[
+
+> **Note** that the `Env Destination` can be a string or an array. Example: 
+
+
+```
+".env.local"
+```
+
+OR 
+
+``` 
+[
     ".env.example",
     ".env.local",
     ".env.development"
-]`
+]
+```
 
-> **Note** that the `Env Source` is just be a string. Example of input is: `.env.development`
+> Also, **Note** that the `Env Source` is just a string. Example of input is: 
 
+```
+".env"
+```
 
 ## Activating and Deactivating
 
