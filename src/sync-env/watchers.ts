@@ -41,9 +41,9 @@ export function watchFileCreate(file: vscode.Uri): void {
               the content of the child(${destFile}) to it?`,
                 ...['No', 'Yes']
             )
-            .then(response => {
-                if (response === 'Yes') writefile(file.path, targetFile);
-            });
+                .then(response => {
+                    if (response === 'Yes') writefile(file.path, targetFile);
+                });
         }
     });
 }
