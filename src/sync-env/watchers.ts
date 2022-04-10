@@ -13,15 +13,16 @@ export function createFileSystemWatcher(blob: string): vscode.FileSystemWatcher 
 }
 
 export function watchFileChange(file: vscode.Uri): void {
-    const destinationEnv: string | Array<string> = getEnvDestination();
+    const destinationEnv: Array<string> = getEnvDestination();
+    const filePath = file.fsPath
 
     destinationEnv.forEach(destFile => {
-        if (fs.existsSync(getFilePath(file.path) + destFile)) {
-            const targetFile = readfile(`${getFilePath(file.path)}${destFile}`);
-            const changedFile = readfile(file.path);
+        if (fs.existsSync(getFilePath(filePath) + destFile)) {
+            const targetFile = readfile(`${getFilePath(filePath)}${destFile}`);
+            const changedFile = readfile(filePath);
 
             writefile(
-                `${getFilePath(file.path)}${destFile}`,
+                `${getFilePath(filePath)}${destFile}`,
                 prepareNewConfig(targetFile, changedFile)
             );
         }
@@ -30,10 +31,11 @@ export function watchFileChange(file: vscode.Uri): void {
 
 export function watchFileCreate(file: vscode.Uri): void {
     const destinationEnv: Array<string> = getEnvDestination();
+    const filePath = file.fsPath
 
     destinationEnv.forEach(destFile => {
-        if (fs.existsSync(getFilePath(file.path) + destFile)) {
-            const targetFile = readfile(`${getFilePath(file.path)}${destFile}`);
+        if (fs.existsSync(getFilePath(filePath) + destFile)) {
+            const targetFile = readfile(`${getFilePath(filePath)}${destFile}`);
 
             vscode.window.showInformationMessage(`
               You just created an env file which you are 
@@ -41,9 +43,9 @@ export function watchFileCreate(file: vscode.Uri): void {
               the content of the child(${destFile}) to it?`,
                 ...['No', 'Yes']
             )
-                .then(response => {
-                    if (response === 'Yes') writefile(file.path, targetFile);
-                });
+            .then(response => {
+                if (response === 'Yes') writefile(filePath, targetFile);
+            });
         }
     });
 }
