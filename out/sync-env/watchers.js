@@ -10,27 +10,29 @@ function createFileSystemWatcher(blob) {
 exports.createFileSystemWatcher = createFileSystemWatcher;
 function watchFileChange(file) {
     const destinationEnv = _1.getEnvDestination();
+    const filePath = file.fsPath;
     destinationEnv.forEach(destFile => {
-        if (fs.existsSync(_1.getFilePath(file.path) + destFile)) {
-            const targetFile = _1.readfile(`${_1.getFilePath(file.path)}${destFile}`);
-            const changedFile = _1.readfile(file.path);
-            _1.writefile(`${_1.getFilePath(file.path)}${destFile}`, _1.prepareNewConfig(targetFile, changedFile));
+        if (fs.existsSync(_1.getFilePath(filePath) + destFile)) {
+            const targetFile = _1.readfile(`${_1.getFilePath(filePath)}${destFile}`);
+            const changedFile = _1.readfile(filePath);
+            _1.writefile(`${_1.getFilePath(filePath)}${destFile}`, _1.prepareNewConfig(targetFile, changedFile));
         }
     });
 }
 exports.watchFileChange = watchFileChange;
 function watchFileCreate(file) {
     const destinationEnv = _1.getEnvDestination();
+    const filePath = file.fsPath;
     destinationEnv.forEach(destFile => {
-        if (fs.existsSync(_1.getFilePath(file.path) + destFile)) {
-            const targetFile = _1.readfile(`${_1.getFilePath(file.path)}${destFile}`);
+        if (fs.existsSync(_1.getFilePath(filePath) + destFile)) {
+            const targetFile = _1.readfile(`${_1.getFilePath(filePath)}${destFile}`);
             vscode.window.showInformationMessage(`
               You just created an env file which you are 
               watching for changes. Do you want to copy 
               the content of the child(${destFile}) to it?`, ...['No', 'Yes'])
                 .then(response => {
                 if (response === 'Yes')
-                    _1.writefile(file.path, targetFile);
+                    _1.writefile(filePath, targetFile);
             });
         }
     });
