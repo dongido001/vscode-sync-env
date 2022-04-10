@@ -1,8 +1,7 @@
 import * as vscode from 'vscode';
 import {
     getEnvSource,
-    watchFile,
-    getEnvDestination
+    watchFile
 } from '../index';
 
 export default function activateWatchers(watchers: Array<vscode.Disposable> = []) {
