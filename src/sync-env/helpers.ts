@@ -30,7 +30,7 @@ export function getEnvDestination(): Array<string> {
     if (Array.isArray(envDestination)) {
         destinationComputed.push(...envDestination)
     } else {
-        // it's string
+        // it's a string
         destinationComputed.push(envDestination)
     }
 

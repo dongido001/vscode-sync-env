@@ -28,7 +28,7 @@ function getEnvDestination() {
         destinationComputed.push(...envDestination);
     }
     else {
-        // it's string
+        // it's a string
         destinationComputed.push(envDestination);
     }
     // remove source envFile from destination envFile
