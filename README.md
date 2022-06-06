@@ -120,7 +120,7 @@ Contribution is always wellcomed!
 
 MIT License
 
-Copyright (c) [2022] [Gideon Onwuka]
+Copyright (c) 2022 Gideon Onwuka
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
