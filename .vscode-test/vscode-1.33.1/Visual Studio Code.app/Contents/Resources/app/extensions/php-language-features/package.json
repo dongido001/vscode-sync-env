@@ -4,7 +4,7 @@
 	"description": "%description%",
 	"version": "1.0.0",
 	"publisher": "vscode",
-	"icon": "icons/logo.png",
+	"icon": "https://github.com/dongido001/vscode-sync-env/blob/master/images/logo.png",
 	"engines": {
 		"vscode": "0.10.x"
 	},
