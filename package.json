@@ -3,9 +3,9 @@
 	"publisher": "dongido",
 	"displayName": "sync-env",
 	"description": "Sync env files",
-	"version": "1.0.5",
+	"version": "1.0.8",
 	"repository": "https://github.com/dongido001/vscode-sync-env",
-	"icon": "https://github.com/dongido001/vscode-sync-env/blob/master/images/logo.png",
+	"icon": "images/logo.png",
 	"license": "MIT",
 	"engines": {
 		"vscode": "^1.33.0"
@@ -18,28 +18,34 @@
 	],
 	"contributes": {
 		"commands": [
-		  {
-			"command": "sync-env.activateWatchers",
-			"title": "Activate watchers"
-		  },
-		  {
-			"command": "sync-env.deactivateWatchers",
-			"title": "Deactivate watchers"
-		  }
+			{
+				"command": "sync-env.activateWatchers",
+				"title": "Activate watchers"
+			},
+			{
+				"command": "sync-env.deactivateWatchers",
+				"title": "Deactivate watchers"
+			}
 		],
 		"configuration": {
 			"title": "SyncEnv Settings",
 			"properties": {
-			  "sync-env.envSource": {
-				"type": "string",
-				"default": ".env",
-				"description": "Specifies which file is the Source file."
-			  },
-			  "sync-env.envDestination": {
-				"type": ["string", "null", "array"],
-				"default": [".env.example"],
-				"description": "Specifies the Destination file/files."
-			  }
+				"sync-env.envSource": {
+					"type": "string",
+					"default": ".env",
+					"description": "Specifies which file is the Source file."
+				},
+				"sync-env.envDestination": {
+					"type": [
+						"string",
+						"null",
+						"array"
+					],
+					"default": [
+						".env.example"
+					],
+					"description": "Specifies the Destination file/files."
+				}
 			}
 		}
 	},

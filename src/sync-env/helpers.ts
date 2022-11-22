@@ -57,7 +57,6 @@ export function readfile(path: string) {
 
 export function envToObjectWithSpace(env: string): Array<any> {
     const config: Array<any> = [];
-
     env
         .split('\n')
         .forEach(line => {
@@ -69,11 +68,11 @@ export function envToObjectWithSpace(env: string): Array<any> {
                     value: line,
                 });
             } else {
-                const lineArray = line.split('=');
+                const [key, ...value] = line.split('=');
                 config.push({
-                    isSpace: !lineArray[0],
-                    key: lineArray[0] || 'space',
-                    value: lineArray[1] || '',
+                    isSpace: !key,
+                    key: key || 'space',
+                    value: value.join("=") || '',
                 });
             }
         });
@@ -82,13 +81,13 @@ export function envToObjectWithSpace(env: string): Array<any> {
 }
 
 export function envToObject(env: string): Array<any> {
-    const config: any = [];
+    const config: any = {};
 
     env
         .split('\n')
         .forEach(line => {
-            const lineArray = line.split('=');
-            config[lineArray[0] || 'space'] = lineArray[1] || '';
+            const [key, ...value] = line.split('=');
+            config[key || 'space'] = value.join("=");
         });
 
     return config;
@@ -107,7 +106,7 @@ export function prepareNewConfig(targetConfig: string, changedConfig: string): a
             result.push('');
         } else if (config.value.match(/["']\s*\${.*}\s*["']/)) {
             result.push(`${config.key}=${config.value}`);
-        } else if (config.key in targetConfigObject) {
+        } else if (targetConfigObject?.[config.key]) {
             result.push(`${config.key}=${targetConfigObject[config.key]}`);
         } else {
             result.push(`${config.key}=`);

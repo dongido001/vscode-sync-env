@@ -66,11 +66,11 @@ function envToObjectWithSpace(env) {
             });
         }
         else {
-            const lineArray = line.split('=');
+            const [key, ...value] = line.split('=');
             config.push({
-                isSpace: !lineArray[0],
-                key: lineArray[0] || 'space',
-                value: lineArray[1] || '',
+                isSpace: !key,
+                key: key || 'space',
+                value: value.join("=") || '',
             });
         }
     });
@@ -78,12 +78,12 @@ function envToObjectWithSpace(env) {
 }
 exports.envToObjectWithSpace = envToObjectWithSpace;
 function envToObject(env) {
-    const config = [];
+    const config = {};
     env
         .split('\n')
         .forEach(line => {
-        const lineArray = line.split('=');
-        config[lineArray[0] || 'space'] = lineArray[1] || '';
+        const [key, ...value] = line.split('=');
+        config[key || 'space'] = value.join("=");
     });
     return config;
 }
@@ -102,7 +102,7 @@ function prepareNewConfig(targetConfig, changedConfig) {
         else if (config.value.match(/["']\s*\${.*}\s*["']/)) {
             result.push(`${config.key}=${config.value}`);
         }
-        else if (config.key in targetConfigObject) {
+        else if (targetConfigObject === null || targetConfigObject === void 0 ? void 0 : targetConfigObject[config.key]) {
             result.push(`${config.key}=${targetConfigObject[config.key]}`);
         }
         else {
