@@ -1,6 +1,6 @@
 # sync-env
 
-This is the README for ["sync-env"](https://marketplace.visualstudio.com/items?itemName=dongido.sync-env) which helps you keep your env files in sync. Once you have installed the `sync-env` extension, it will begin synchronizing any source env file and destination env file/files found in your project root folder. It also works with sub folders too.
+This is the README for [&#34;sync-env&#34;](https://marketplace.visualstudio.com/items?itemName=dongido.sync-env) which helps you keep your env files in sync. Once you have installed the `sync-env` extension, it will begin synchronizing any source env file and destination env file/files found in your project root folder. It also works with sub folders too.
 
 Annnnd if you like it, consider suppporting me at [Pateron](https://www.patreon.com/dongido)
 
@@ -32,17 +32,15 @@ To configure:
 
 ![Configuring sync files - Step 1](./images/Sync-env-step-3.png)
 
-
-> **Note** that the `Env Destination` can be a string or an array. Example: 
-
+> **Note** that the `Env Destination` can be a string or an array. Example:
 
 ```
 ".env.local"
 ```
 
-OR 
+OR
 
-``` 
+```
 [
     ".env.example",
     ".env.local",
@@ -50,7 +48,7 @@ OR
 ]
 ```
 
-> Also, **Note** that the `Env Source` is just a string. Example of input is: 
+> Also, **Note** that the `Env Source` is just a string. Example of input is:
 
 ```
 ".env"
@@ -72,7 +70,6 @@ To deactivate the extension:
 
 ![Sync Env Demo](./images/deactivate.png)
 
-
 # CHANGELOG
 
 Notable changes:
@@ -80,39 +77,64 @@ Notable changes:
 ## [1.0.3] - 2019-04-10
 
 ### Added
+
 - Added basics for writing tests
 - Provided provision for customising .env files
 - Prompt to copy content of watched files for created config file.
+
 ### Changed
+
 - Refactored code
+
 ### Removed
 
 ## [1.0.4] - 2019-09-27
 
 ### Added
+
 - Added extension activation command
 - Added extension deactivation command
 - [Env variable](https://github.com/dongido001/vscode-sync-env/issues/3) can now be synced!
-- [Comments](https://github.com/dongido001/vscode-sync-env/issues/2) are now respected - 
+- [Comments](https://github.com/dongido001/vscode-sync-env/issues/2) are now respected -
+
 ### Changed
+
 - Refactored code to allow activating and deactivating the extension
+
 ### Removed
 
 ## [1.0.5] - 2020-05-25
 
 ### Added
+
 - You can now customize/specify your env files
+
 ### Changed
+
 ### Removed
 
+
+## [1.0.8] - 2022-11-22
+
+### Added
+
+### Changed
+
+### Removed
+
+### Fix
+
+* fix:Sync Issue when value contains `=` [#22]
+
 ## BUG AND FEATURE REQUEST
-Please, open an [issue on GitHub](https://github.com/dongido001/vscode-sync-env/issues) if you want to report a bug or you thought of a good feature to have. 
+
+Please, open an [issue on GitHub](https://github.com/dongido001/vscode-sync-env/issues) if you want to report a bug or you thought of a good feature to have.
 
 Contribution is always wellcomed!
 
 ## TODO
 
-- [x] Allow users to set the files they want to sync.
+- [X] Allow users to set the files they want to sync.
 
 - [] ...And other requested features
 
