@@ -57,26 +57,31 @@ export function readfile(path: string) {
 
 export function envToObjectWithSpace(env: string): Array<any> {
     const config: Array<any> = [];
-    env
-        .split('\n')
-        .forEach(line => {
-            if (line.startsWith('#')) {
-                config.push({
-                    isSpace: false,
-                    isComment: true,
-                    key: '*****comment*****',
-                    value: line,
-                });
-            } else {
-                const [key, ...value] = line.split('=');
-                config.push({
-                    isSpace: !key,
-                    key: key || 'space',
-                    value: value.join("=") || '',
-                });
+    env.split('\n').forEach(line => {
+        if (line.startsWith('#')) {
+            // Remove the '#' and trim whitespace to analyze the content.
+            const uncommented = line.slice(1).trim();
+            // Check if the content resembles a commented-out environment variable assignment.
+            if (/^[A-Za-z_][A-Za-z0-9_]*=/.test(uncommented)) {
+                // If it does, skip this line to avoid leaking sensitive info.
+                return;
             }
-        });
-
+            // Otherwise, treat it as a genuine comment.
+            config.push({
+                isSpace: false,
+                isComment: true,
+                key: '*****comment*****',
+                value: line,
+            });
+        } else {
+            const [key, ...value] = line.split('=');
+            config.push({
+                isSpace: !key,
+                key: key || 'space',
+                value: value.join("=") || '',
+            });
+        }
+    });
     return config;
 }
 

@@ -54,10 +54,16 @@ function readfile(path) {
 exports.readfile = readfile;
 function envToObjectWithSpace(env) {
     const config = [];
-    env
-        .split('\n')
-        .forEach(line => {
+    env.split('\n').forEach(line => {
         if (line.startsWith('#')) {
+            // Remove the '#' and trim whitespace to analyze the content.
+            const uncommented = line.slice(1).trim();
+            // Check if the content resembles a commented-out environment variable assignment.
+            if (/^[A-Za-z_][A-Za-z0-9_]*=/.test(uncommented)) {
+                // If it does, skip this line to avoid leaking sensitive info.
+                return;
+            }
+            // Otherwise, treat it as a genuine comment.
             config.push({
                 isSpace: false,
                 isComment: true,

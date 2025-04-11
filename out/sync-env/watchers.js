@@ -42,6 +42,7 @@ function watchFile(file) {
     const fileWatcher = createFileSystemWatcher(`**/${file}`);
     fileWatcher.onDidChange(watchFileChange);
     fileWatcher.onDidCreate(watchFileCreate);
+    console.log(`Watching for changes in ${JSON.stringify(fileWatcher)}`);
     return fileWatcher;
 }
 exports.watchFile = watchFile;
