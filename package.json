@@ -45,6 +45,11 @@
 						".env.example"
 					],
 					"description": "Specifies the Destination file/files."
+				},
+				"sync-env.ignoreSensitiveComments": {
+					"type": "boolean",
+					"default": false,
+					"description": "If set to true, the extension will ignore likely sensitive comments in the environment files."
 				}
 			}
 		}

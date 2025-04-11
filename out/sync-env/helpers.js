@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isConfigSame = exports.prepareNewConfig = exports.envToObject = exports.envToObjectWithSpace = exports.readfile = exports.writefile = exports.getFilePath = exports.getFileName = exports.getEnvDestination = exports.getEnvSource = void 0;
+exports.isConfigSame = exports.prepareNewConfig = exports.envToObject = exports.envToObjectWithSpace = exports.readfile = exports.writefile = exports.resolveDestinationPath = exports.getFilePath = exports.getFileName = exports.getEnvDestination = exports.getEnvSource = void 0;
 const fs = require("fs");
 const vscode = require("vscode");
+const pathModule = require("path");
 function getEnvSource() {
     const settings = vscode.workspace.getConfiguration('sync-env');
     let { envSource } = settings;
@@ -36,14 +37,39 @@ function getEnvDestination() {
     return destinationComputed.filter((destinationEnv) => destinationEnv !== sourceEnv);
 }
 exports.getEnvDestination = getEnvDestination;
-function getFileName(path) {
-    return path.replace(/\/.*\//, '');
+// export function getFileName(path: String): string {
+//     return path.replace(/\/.*\//, '');
+// }
+// export function getFilePath(path: String): string {
+//     return path.replace(/\..*/, '');
+// }
+function getFileName(filePath) {
+    return pathModule.basename(filePath);
 }
 exports.getFileName = getFileName;
-function getFilePath(path) {
-    return path.replace(/\..*/, '');
+function getFilePath(filePath) {
+    const parsed = pathModule.parse(filePath);
+    // Return the full path without the file extension.
+    return pathModule.join(parsed.dir, "/");
 }
 exports.getFilePath = getFilePath;
+function resolveDestinationPath(destFile) {
+    var _a;
+    if (pathModule.isAbsolute(destFile)) {
+        // Use the user-provided absolute path directly.
+        return destFile;
+    }
+    else {
+        // If it's relative, resolve it relative to the first workspace folder.
+        const workspaceFolder = (_a = vscode.workspace.workspaceFolders) === null || _a === void 0 ? void 0 : _a[0];
+        if (workspaceFolder) {
+            return pathModule.join(workspaceFolder.uri.fsPath, destFile);
+        }
+        // Fallback: just return destFile as is, though this might not be ideal.
+        return destFile;
+    }
+}
+exports.resolveDestinationPath = resolveDestinationPath;
 function writefile(path, data) {
     fs.writeFileSync(path, data, 'utf8');
 }

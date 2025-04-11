@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as vscode from 'vscode';
+import * as pathModule from 'path';
 
 export function getEnvSource(): string {
     const settings = vscode.workspace.getConfiguration('sync-env');
@@ -39,12 +40,37 @@ export function getEnvDestination(): Array<string> {
     return destinationComputed.filter((destinationEnv: string) => destinationEnv !== sourceEnv);
 }
 
-export function getFileName(path: String): string {
-    return path.replace(/\/.*\//, '');
+// export function getFileName(path: String): string {
+//     return path.replace(/\/.*\//, '');
+// }
+
+// export function getFilePath(path: String): string {
+//     return path.replace(/\..*/, '');
+// }
+
+export function getFileName(filePath: string): string {
+    return pathModule.basename(filePath);
 }
 
-export function getFilePath(path: String): string {
-    return path.replace(/\..*/, '');
+export function getFilePath(filePath: string): string {
+    const parsed = pathModule.parse(filePath);
+    // Return the full path without the file extension.
+    return pathModule.join(parsed.dir, "/");
+}
+
+export function resolveDestinationPath(destFile: string): string {
+    if (pathModule.isAbsolute(destFile)) {
+        // Use the user-provided absolute path directly.
+        return destFile;
+    } else {
+        // If it's relative, resolve it relative to the first workspace folder.
+        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+        if (workspaceFolder) {
+            return pathModule.join(workspaceFolder.uri.fsPath, destFile);
+        }
+        // Fallback: just return destFile as is, though this might not be ideal.
+        return destFile;
+    }
 }
 
 export function writefile(path: string, data: string) {
