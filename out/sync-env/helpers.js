@@ -37,12 +37,6 @@ function getEnvDestination() {
     return destinationComputed.filter((destinationEnv) => destinationEnv !== sourceEnv);
 }
 exports.getEnvDestination = getEnvDestination;
-// export function getFileName(path: String): string {
-//     return path.replace(/\/.*\//, '');
-// }
-// export function getFilePath(path: String): string {
-//     return path.replace(/\..*/, '');
-// }
 function getFileName(filePath) {
     return pathModule.basename(filePath);
 }
@@ -79,13 +73,15 @@ function readfile(path) {
 }
 exports.readfile = readfile;
 function envToObjectWithSpace(env) {
+    const settings = vscode.workspace.getConfiguration('sync-env');
+    let { ignoreSensitiveComments = false } = settings;
     const config = [];
     env.split('\n').forEach(line => {
         if (line.startsWith('#')) {
             // Remove the '#' and trim whitespace to analyze the content.
             const uncommented = line.slice(1).trim();
             // Check if the content resembles a commented-out environment variable assignment.
-            if (/^[A-Za-z_][A-Za-z0-9_]*=/.test(uncommented)) {
+            if (/^[A-Za-z_][A-Za-z0-9_]*=/.test(uncommented) && ignoreSensitiveComments) {
                 // If it does, skip this line to avoid leaking sensitive info.
                 return;
             }

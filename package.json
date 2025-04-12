@@ -3,7 +3,7 @@
 	"publisher": "dongido",
 	"displayName": "sync-env",
 	"description": "Sync env files",
-	"version": "1.0.8",
+	"version": "1.0.9",
 	"repository": "https://github.com/dongido001/vscode-sync-env",
 	"icon": "images/logo.png",
 	"license": "MIT",
@@ -48,7 +48,7 @@
 				},
 				"sync-env.ignoreSensitiveComments": {
 					"type": "boolean",
-					"default": false,
+					"default": true,
 					"description": "If set to true, the extension will ignore likely sensitive comments in the environment files."
 				}
 			}
