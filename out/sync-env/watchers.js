@@ -1,21 +1,39 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.watchFile = exports.watchFileCreate = exports.watchFileChange = exports.createFileSystemWatcher = void 0;
+exports.watchFile = exports.watchFileCreate = exports.watchFileChange = exports.resolveDestinationPath = exports.createFileSystemWatcher = void 0;
 const fs = require("fs");
 const vscode = require("vscode");
+const pathModule = require("path");
 const _1 = require("./");
 function createFileSystemWatcher(blob) {
     return vscode.workspace.createFileSystemWatcher(blob);
 }
 exports.createFileSystemWatcher = createFileSystemWatcher;
+function resolveDestinationPath(destFile, sourceFile) {
+    // Determine which workspace folder the source file belongs to.
+    const workspaceFolder = vscode.workspace.getWorkspaceFolder(sourceFile);
+    if (workspaceFolder) {
+        // Resolve relative to the workspace folder's root.
+        return pathModule.join(workspaceFolder.uri.fsPath, destFile);
+    }
+    else {
+        // Fallback if no workspace folder is detected.
+        return destFile;
+    }
+}
+exports.resolveDestinationPath = resolveDestinationPath;
 function watchFileChange(file) {
+    // Get an array of destination files from your environment
     const destinationEnv = _1.getEnvDestination();
     const filePath = file.fsPath;
+    // For each destination file defined in your environment config
     destinationEnv.forEach(destFile => {
-        if (fs.existsSync(_1.getFilePath(filePath) + destFile)) {
-            const targetFile = _1.readfile(`${_1.getFilePath(filePath)}${destFile}`);
+        const fullDestPath = resolveDestinationPath(destFile, file);
+        if (fs.existsSync(fullDestPath)) {
+            const targetFile = _1.readfile(fullDestPath);
             const changedFile = _1.readfile(filePath);
-            _1.writefile(`${_1.getFilePath(filePath)}${destFile}`, _1.prepareNewConfig(targetFile, changedFile));
+            const newConfig = _1.prepareNewConfig(targetFile, changedFile);
+            _1.writefile(fullDestPath, newConfig);
         }
     });
 }
@@ -39,7 +57,11 @@ function watchFileCreate(file) {
 }
 exports.watchFileCreate = watchFileCreate;
 function watchFile(file) {
-    const fileWatcher = createFileSystemWatcher(`**/${file}`);
+    // Create a glob pattern to match any file with the given name.
+    const pattern = `{${file},**/${file}}`;
+    // Use the VS Code API to create the file system watcher.
+    const fileWatcher = vscode.workspace.createFileSystemWatcher(pattern);
+    // Attach event listeners.
     fileWatcher.onDidChange(watchFileChange);
     fileWatcher.onDidCreate(watchFileCreate);
     return fileWatcher;

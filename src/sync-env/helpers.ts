@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as vscode from 'vscode';
+import * as pathModule from 'path';
 
 export function getEnvSource(): string {
     const settings = vscode.workspace.getConfiguration('sync-env');
@@ -39,12 +40,29 @@ export function getEnvDestination(): Array<string> {
     return destinationComputed.filter((destinationEnv: string) => destinationEnv !== sourceEnv);
 }
 
-export function getFileName(path: String): string {
-    return path.replace(/\/.*\//, '');
+export function getFileName(filePath: string): string {
+    return pathModule.basename(filePath);
 }
 
-export function getFilePath(path: String): string {
-    return path.replace(/\..*/, '');
+export function getFilePath(filePath: string): string {
+    const parsed = pathModule.parse(filePath);
+    // Return the full path without the file extension.
+    return pathModule.join(parsed.dir, "/");
+}
+
+export function resolveDestinationPath(destFile: string): string {
+    if (pathModule.isAbsolute(destFile)) {
+        // Use the user-provided absolute path directly.
+        return destFile;
+    } else {
+        // If it's relative, resolve it relative to the first workspace folder.
+        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+        if (workspaceFolder) {
+            return pathModule.join(workspaceFolder.uri.fsPath, destFile);
+        }
+        // Fallback: just return destFile as is, though this might not be ideal.
+        return destFile;
+    }
 }
 
 export function writefile(path: string, data: string) {
@@ -56,27 +74,35 @@ export function readfile(path: string) {
 }
 
 export function envToObjectWithSpace(env: string): Array<any> {
-    const config: Array<any> = [];
-    env
-        .split('\n')
-        .forEach(line => {
-            if (line.startsWith('#')) {
-                config.push({
-                    isSpace: false,
-                    isComment: true,
-                    key: '*****comment*****',
-                    value: line,
-                });
-            } else {
-                const [key, ...value] = line.split('=');
-                config.push({
-                    isSpace: !key,
-                    key: key || 'space',
-                    value: value.join("=") || '',
-                });
-            }
-        });
+    const settings = vscode.workspace.getConfiguration('sync-env');
+    let { ignoreSensitiveComments = false } = settings;
 
+    const config: Array<any> = [];
+    env.split('\n').forEach(line => {
+        if (line.startsWith('#')) {
+            // Remove the '#' and trim whitespace to analyze the content.
+            const uncommented = line.slice(1).trim();
+            // Check if the content resembles a commented-out environment variable assignment.
+            if (/^[A-Za-z_][A-Za-z0-9_]*=/.test(uncommented) && ignoreSensitiveComments) {
+                // If it does, skip this line to avoid leaking sensitive info.
+                return;
+            }
+            // Otherwise, treat it as a genuine comment.
+            config.push({
+                isSpace: false,
+                isComment: true,
+                key: '*****comment*****',
+                value: line,
+            });
+        } else {
+            const [key, ...value] = line.split('=');
+            config.push({
+                isSpace: !key,
+                key: key || 'space',
+                value: value.join("=") || '',
+            });
+        }
+    });
     return config;
 }
 
