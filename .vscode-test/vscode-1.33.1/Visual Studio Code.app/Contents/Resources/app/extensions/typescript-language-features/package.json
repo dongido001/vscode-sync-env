@@ -15,7 +15,7 @@
   "categories": ["Programming Languages"],
   "dependencies": {
     "jsonc-parser": "^2.0.1",
-    "semver": "5.5.1",
+    "semver": "5.7.2",
     "vscode-extension-telemetry": "0.1.1",
     "vscode-nls": "^4.0.0"
   },
