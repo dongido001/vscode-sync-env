@@ -54,7 +54,7 @@ OR
 ".env"
 ```
 
-By default the extension completely ignores line of comments that looks like a config. for example:
+> **By default** the extension completely ignores line of comments that looks like a config. for example:
 
 `#DB=1234db`
 `# DB=1234db`
