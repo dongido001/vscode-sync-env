@@ -54,6 +54,18 @@ OR
 ".env"
 ```
 
+By default the extension completely ignores line of comments that looks like a config. for example:
+
+`#DB=1234db`
+`# DB=1234db`
+`# UAV=top`
+
+But normal comments are not ignored like:
+
+`# The settings will turn off UAV for prod`
+
+If you don't want any comments to be ignored, please uncheck the `ignoreSensitiveComments` checkbox from the extension settings.
+
 ## Activating and Deactivating
 
 The extension is activated automatically by default when it is first installed. In case you have deactivated it before, you can activate it using by:
