@@ -31,7 +31,7 @@
 	"extensionDependencies": ["ms-vscode.node-debug2"],
 	"dependencies": {
 		"glob": "7.1.3",
-		"minimatch": "3.0.4",
+		"minimatch": "3.0.5",
 		"request-light": "0.2.4",
 		"source-map": "0.6.1",
 		"vscode-debugadapter": "1.34.0",
